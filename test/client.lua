@@ -1,0 +1,7 @@
+RegisterNetEvent("StartFire")
+AddEventHandler("StartFire", function()
+	local Coords = GetEntityCoords(GetPlayerPed(-1))
+	StartScriptFire(Coords.x, Coords.y+3, Coords.z-1, 25, 0)
+	StartScriptFire(Coords.x, Coords.y+4, Coords.z-1, 25, 0)
+	StartScriptFire(Coords.x, Coords.y+5, Coords.z-1, 25, 0)
+end)
