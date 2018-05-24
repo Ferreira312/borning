@@ -1900,33 +1900,9 @@ Citizen.CreateThread(function()
       GUI.Time = GetGameTimer()
     end
 
-  end
-end)
-
-function openFire()
-  if PlayerData.job ~= nil and PlayerData.job.name == 'fire' and not ESX.UI.Menu.IsOpen('default', GetCurrentResourceName(), 'fire_actions') and (GetGameTimer() - GUI.Time) > 150 then
-    OpenFireActionsMenu()
-    GUI.Time = GetGameTimer()
-  end
-end
-
-function getJob()
-  if PlayerData.job ~= nil then
-    return PlayerData.job.name
-  end
-end
-
--------------------
-
---Key control
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        
-      if IsControlJustReleased(0, Keys['DELETE']) and not IsDead and PlayerData.job ~= nil and PlayerData.job.name == 'mecano' then
-        if NPCOnJob then
-         if GetGameTimer() - NPCLastCancel > 5 * 60000 then
+     if IsControlJustReleased(0, Keys['DELETE']) and PlayerData.job ~= nil and PlayerData.job.name == 'fire' then
+          if NPCOnJob then
+            if GetGameTimer() - NPCLastCancel > 5 * 60000 then
               StopNPCJob(true)
               NPCLastCancel = GetGameTimer()
             else
@@ -1942,7 +1918,22 @@ Citizen.CreateThread(function()
             else
               ESX.ShowNotification(_U('must_in_truck'))
             end
-         end
-      end 
-   end
-end) 
+           end
+         end 
+     end			
+			
+  end
+end)
+
+function openFire()
+  if PlayerData.job ~= nil and PlayerData.job.name == 'fire' and not ESX.UI.Menu.IsOpen('default', GetCurrentResourceName(), 'fire_actions') and (GetGameTimer() - GUI.Time) > 150 then
+    OpenFireActionsMenu()
+    GUI.Time = GetGameTimer()
+  end
+end
+
+function getJob()
+  if PlayerData.job ~= nil then
+    return PlayerData.job.name
+  end
+end
