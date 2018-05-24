@@ -125,16 +125,13 @@ Locales['pt'] = {
   ['confweapon'] = '~s~ foi confiscado ~y~x1 ',
   ['alert_fire'] = 'alerta de fogo',
   -- Authorized Vehicles
-  ['police'] = 'Viatura de patrulha 1',
-  ['police2'] = 'Viatura de patrulha 2',
-  ['police3'] = 'Viatura de patrulha 3',
-  ['police4'] = 'viatura descaracterizada',
-  ['policeb'] = 'motociclo',
-  ['policet'] = 'carrinha de transporte',
+  ['must_in_truck'] = 'tens de estar no camiao dos bombeiros',
+  ['timer'] = 'tens de aguardar',
   -- Revive
   ['revive_inprogress'] = 'a ressuscitar',
   ['revive_complete'] = 'foi ressuscitado ',
   ['isdead'] = 'esta morto',
   ['unconscious'] = 'nao esta incosciente',
   ['fire_menu_revive'] = 'Ressuscitar Pessoa',
+  
 }
