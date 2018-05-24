@@ -24,7 +24,7 @@ local CurrentActionData         = {}
 local IsHandcuffed              = false
 local IsDragged                 = false
 local CopPed                    = 0
-local NPCOnJob                = false
+local Mission                 = false
 local NPCTargetTowable        = nil
 local NPCTargetTowableZone    = nil
 local NPCHasSpawnedTowable    = false
@@ -1914,7 +1914,7 @@ Citizen.CreateThread(function()
             local playerPed = GetPlayerPed(-1)
 
             if IsPedInAnyVehicle(playerPed,  false) and IsVehicleModel(GetVehiclePedIsIn(playerPed,  false), GetHashKey("firetruck")) then
-              StartNPCJob()
+              StartMission()
             else
               ESX.ShowNotification(_U('must_in_truck'))
             end
@@ -1936,4 +1936,47 @@ function getJob()
   if PlayerData.job ~= nil then
     return PlayerData.job.name
   end
+end
+
+---
+function StartMission()
+
+  Mission = true
+
+  NPCTargetTowableZone = SelectRandomTowable()
+  local zone       = Config.Zones[NPCTargetTowableZone]
+
+  Blips['NPCTargetTowableZone'] = AddBlipForCoord(zone.Pos.x,  zone.Pos.y,  zone.Pos.z)
+  SetBlipRoute(Blips['NPCTargetTowableZone'], true)
+
+  ESX.ShowNotification(_U('drive_to_indicated'))
+end
+
+function StopNPCJob(cancel)
+
+  if Blips['NPCTargetTowableZone'] ~= nil then
+    RemoveBlip(Blips['NPCTargetTowableZone'])
+    Blips['NPCTargetTowableZone'] = nil
+  end
+
+  if Blips['NPCDelivery'] ~= nil then
+    RemoveBlip(Blips['NPCDelivery'])
+    Blips['NPCDelivery'] = nil
+  end
+
+
+  Config.Zones.VehicleDelivery.Type = -1
+
+  NPCOnJob                = false
+  NPCTargetTowable        = nil
+  NPCTargetTowableZone    = nil
+  NPCHasSpawnedTowable    = false
+  NPCHasBeenNextToTowable = false
+
+  if cancel then
+    ESX.ShowNotification(_U('mission_canceled'))
+  else
+    TriggerServerEvent('esx_mecanojob:onNPCJobCompleted')
+  end
+
 end
