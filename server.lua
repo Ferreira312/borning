@@ -1,4 +1,28 @@
-print("Fire Script has loaded! Coded by Rjross2013")
+ESX = nil
+
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+
+function Countfire()
+
+	local xPlayers = ESX.GetPlayers()
+
+	Fireman = 0
+	
+	for i=1, #xPlayers, 1 do
+		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
+		if xPlayer.job.name == 'fire' then
+			Fireman = Fireman + 1
+		end
+	end
+end
+
+ESX.RegisterServerCallback('stadusrp_getJobsOnline', function(source, cb)
+
+  local xPlayer    = ESX.GetPlayerFromId(source)
+  Countfire()
+cb(FireConnected)
+
+end)
 
 -- RegisterServerEvent("lol:startfire")
 -- AddEventHandler("lol:startfire", function( x , y , z , args, p)
@@ -14,6 +38,7 @@ print("Fire Script has loaded! Coded by Rjross2013")
 	-- TriggerClientEvent("chatMessage", p, "INFO", {255, 0, 0}, tostring(gasFire))
 	-- StartScriptFire(x, y, z, maxChilds, gasFire)
 -- end)
+
 RegisterServerEvent('fire:chatAlert')
 AddEventHandler('fire:chatAlert', function( text )  
     TriggerClientEvent('chatMessage', -1, 'FIRE', {255, 0, 0}, 'A fire has been spotted at: ' .. text)
