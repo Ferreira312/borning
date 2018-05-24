@@ -94,20 +94,8 @@ AddEventHandler("chatMessage", function(p, color, msg)
         	TriggerClientEvent("lol:firecounter", p)
         	CancelEvent()
         end
-        if cmd == "/cbomb" then
-        	TriggerClientEvent("lol:carbomb", p)
-        	CancelEvent()
-        end
-		if cmd == "/test" then
-        	TriggerClientEvent("lol:test1", p)
-        	CancelEvent()
-        end
 		if cmd == "/sync" then
         	TriggerClientEvent("lol:firesync3", p)
-        end
-        if cmd == "/firehelp" then
-        	TriggerClientEvent("chatMessage", p, "FIRE ", {255, 0, 0}, "You can start a big fire by typing /fire, and you can also start a single fire by pressing the home key! /cbomb blows up the last car you entered and starts a big fire around it!")
-        	CancelEvent()
         end
     end
 end)
