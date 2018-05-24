@@ -1,4 +1,7 @@
-ESX = nil
+ESX 						   = nil
+local fireConnected       	   = 0
+
+local PlayersSellingOpium      = {}
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
@@ -6,23 +9,37 @@ function Countfire()
 
 	local xPlayers = ESX.GetPlayers()
 
-	Fireman = 0
-	
+	fireConnected = 0
+
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
 		if xPlayer.job.name == 'fire' then
-			Fireman = Fireman + 1
+			fireConnected = fireConnected + 1
 		end
 	end
+
+	SetTimeout(120 * 1000, Countfire)
 end
 
-ESX.RegisterServerCallback('stadusrp_getJobsOnline', function(source, cb)
+Countfire()
 
-  local xPlayer    = ESX.GetPlayerFromId(source)
-  Countfire()
-cb(FireConnected)
+local function Startfire(source)
 
-end)
+	if fireConnected < Config.Requiredfire then
+		TriggerClientEvent('esx:showNotification', source, _U('not_enought_fire', fireConnected, Config.Requiredfire))
+		return
+	end
+
+	TriggerClientEvent('esx:showNotification', source, _U('fire_started'))
+	local fireamnt = cmd[2]
+        	TriggerClientEvent("lol:firethings", p)
+        	CancelEvent()
+	end
+	
+	
+	end)
+end
+
 
 -- RegisterServerEvent("lol:startfire")
 -- AddEventHandler("lol:startfire", function( x , y , z , args, p)
@@ -67,6 +84,9 @@ end)
 	TriggerClientEvent("lol:fireremovess", -1, x, y, z, test)
 	--TriggerClientEvent("lol:firesync3", -1)
  end)
+
+
+[[
 AddEventHandler("chatMessage", function(p, color, msg)
     if msg:sub(1, 1) == "/" then
         fullcmd = stringSplit(msg, " ")
@@ -99,6 +119,8 @@ AddEventHandler("chatMessage", function(p, color, msg)
         end
     end
 end)
+]]
+
 function stringSplit(inputstr, sep)
     if sep == nil then
         sep = "%s"
