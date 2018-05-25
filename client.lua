@@ -2,13 +2,12 @@ fireremover = {}
 fireremoverParticles = {}
 streetnames = {}
 
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------- CONFIG AREA -------------------------------------------------------------------------
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
-local PlayerData                = {}
-local GUI                       = {}
 local chatStreetAlerts = true
 local chanceForSpread = 900 -- basically a thousand sided dice is rolled and if it gets above this number then the fire spreads once
 local spawnRandomFires = true -- set to true and put x,y,z locations and amount of time before their is a chance of a fire spawning
@@ -20,18 +19,6 @@ local randomFireLocations = { --  this is the format you need to put in for your
 	{ ['x'] = 46.4554, ['y'] = 6458.1826, ['z'] = 31.4252 },
     { ['x'] = 644.9803, ['y'] = 2792.7102, ['z'] = 41.9462 },
 }
-
-
-ESX                             = nil
-GUI.Time                        = 0
-
-Citizen.CreateThread(function()
-  while ESX == nil do
-    TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-    Citizen.Wait(10)
-  end
-end)
-
 
 if spawnRandomFires == true then
 	Citizen.CreateThread(function() 
@@ -623,15 +610,3 @@ Citizen.CreateThread(function()
 		    
 	end
 end)
-
-function GetPlayers()
-    local players = {}
-
-    for i = 0, 31 do
-        if NetworkIsPlayerActive(i) then
-            table.insert(players, i)
-        end
-    end
-
-    return players
-end
