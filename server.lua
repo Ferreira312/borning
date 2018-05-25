@@ -1,45 +1,4 @@
-ESX 						   = nil
-local fireConnected       	   = 0
-
-local PlayersSellingOpium      = {}
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-
-function Countfire()
-
-	local xPlayers = ESX.GetPlayers()
-
-	fireConnected = 0
-
-	for i=1, #xPlayers, 1 do
-		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-		if xPlayer.job.name == 'fire' then
-			fireConnected = fireConnected + 1
-		end
-	end
-
-	SetTimeout(120 * 1000, Countfire)
-end
-
-Countfire()
-
-local function Startfire(source)
-
-	if fireConnected < Config.Requiredfire then
-		TriggerClientEvent('esx:showNotification', source, _U('not_enought_fire', fireConnected, Config.Requiredfire))
-		return
-	end
-
-	TriggerClientEvent('esx:showNotification', source, _U('fire_started'))
-	local fireamnt = cmd[2]
-        	TriggerClientEvent("lol:firethings", p)
-        	CancelEvent()
-	end
-	
-	
-	end)
-end
-
+print("Fire Script has loaded! Coded by Rjross2013")
 
 -- RegisterServerEvent("lol:startfire")
 -- AddEventHandler("lol:startfire", function( x , y , z , args, p)
@@ -55,7 +14,6 @@ end
 	-- TriggerClientEvent("chatMessage", p, "INFO", {255, 0, 0}, tostring(gasFire))
 	-- StartScriptFire(x, y, z, maxChilds, gasFire)
 -- end)
-
 RegisterServerEvent('fire:chatAlert')
 AddEventHandler('fire:chatAlert', function( text )  
     TriggerClientEvent('chatMessage', -1, 'FIRE', {255, 0, 0}, 'A fire has been spotted at: ' .. text)
@@ -84,9 +42,6 @@ end)
 	TriggerClientEvent("lol:fireremovess", -1, x, y, z, test)
 	--TriggerClientEvent("lol:firesync3", -1)
  end)
-
-
-[[
 AddEventHandler("chatMessage", function(p, color, msg)
     if msg:sub(1, 1) == "/" then
         fullcmd = stringSplit(msg, " ")
@@ -114,13 +69,23 @@ AddEventHandler("chatMessage", function(p, color, msg)
         	TriggerClientEvent("lol:firecounter", p)
         	CancelEvent()
         end
+        if cmd == "/cbomb" then
+        	TriggerClientEvent("lol:carbomb", p)
+        	CancelEvent()
+        end
+		if cmd == "/test" then
+        	TriggerClientEvent("lol:test1", p)
+        	CancelEvent()
+        end
 		if cmd == "/sync" then
         	TriggerClientEvent("lol:firesync3", p)
         end
+        if cmd == "/firehelp" then
+        	TriggerClientEvent("chatMessage", p, "FIRE ", {255, 0, 0}, "You can start a big fire by typing /fire, and you can also start a single fire by pressing the home key! /cbomb blows up the last car you entered and starts a big fire around it!")
+        	CancelEvent()
+        end
     end
 end)
-]]
-
 function stringSplit(inputstr, sep)
     if sep == nil then
         sep = "%s"
